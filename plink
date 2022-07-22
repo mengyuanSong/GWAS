@@ -1,0 +1,5 @@
+#merge three PED/MAP files
+/Users/mys/Downloads/plink_mac_20220402/plink --file TOP3 --merge TOP2.ped TOP2.map --recode --out merge
+/Users/mys/Downloads/plink_mac_20220402/plink --file merge --merge TOP1.ped TOP1.map --recode --out TOP
+
+#make binary files
