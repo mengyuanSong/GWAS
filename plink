@@ -3,3 +3,6 @@
 /Users/mys/Downloads/plink_mac_20220402/plink --file merge --merge TOP1.ped TOP1.map --recode --out TOP
 
 #make binary files
+
+#check the phenotype in pedfiles
+awk '{ print $6 }' filename
