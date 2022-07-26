@@ -10,7 +10,7 @@ awk '{ print $6 }' filename | head -1
 #update phenotypes
 /Users/mys/Downloads/plink_mac_20220402/plink --file TOP --pheno pheno.txt --recode --out TOPphenoUp
 
-#replace phenotypes. ##did not try
+#replace phenotypes. ##long printing
 awk 'FNR==NR{a[NR]=$3;next}{$2=a[FNR]}1' f2 f1
 ##FNR==NR allows you to work with one entire file at a time. In this case it is the file f2. NR and FNR both contain line numbers with the difference being FNR gets reset to 1 when a new file is read where as NR continues to increment.
 While we are working with f2 file, we are creating an array called a using line number (NR) as the key and third column ($3) as the value. next allows us to skip the rest of the action block.
@@ -19,5 +19,5 @@ What this block does is it re-assigns second column value to array value by look
 1 at the end prints the line. It returns true, and in awk true statements results in printing of the line.
 f2 f1 is the order of files defined. Since we want to create an array from file f2 we put that first.
 
-#
+# print out the line number
 awk 'END{print NR}' filename
