@@ -1,14 +1,12 @@
 #merge three PED/MAP files
-/Users/mys/Downloads/plink_mac_20220402/plink --file TOP3 --merge TOP2.ped TOP2.map --recode --out merge
-/Users/mys/Downloads/plink_mac_20220402/plink --file merge --merge TOP1.ped TOP1.map --recode --out TOP
+/Users/mys/Downloads/plink_mac/plink --file TOP3 --merge TOP2.ped TOP2.map --recode --out merge
+/Users/mys/Downloads/plink_mac/plink --file merge --merge TOP1.ped TOP1.map --recode --out TOP
 
 #make binary files
 
 #check the phenotype in pedfiles
 awk '{ print $6 }' filename | head -1
 
-#update phenotypes
-/Users/mys/Downloads/plink_mac_20220402/plink --file TOP --pheno pheno.txt --recode --out TOPphenoUp
 
 #replace phenotypes. ##long printing
 awk 'FNR==NR{a[NR]=$3;next}{$2=a[FNR]}1' f2 f1
@@ -19,5 +17,22 @@ What this block does is it re-assigns second column value to array value by look
 1 at the end prints the line. It returns true, and in awk true statements results in printing of the line.
 f2 f1 is the order of files defined. Since we want to create an array from file f2 we put that first.
 
-# print out the line number
+# print out the line number ##wait a minute
 awk 'END{print NR}' filename
+
+#filter
+/Users/mys/Downloads/plink_mac/plink --file TOP --maf 0.01 --geno 0.05 --hwe 0.00001 --make-bed --out TOP_QC1
+
+#keep some samples ##From plink manual: Extract a subset of individuals
+/Users/mys/Downloads/plink_mac/plink --bfile TOP_QC --keep sex.nosex.txt --make-bed --out TOP_QC2
+
+#remove duplicate samples
+/Users/mys/Downloads/plink_mac/plink --file TOP_QC2 --genome --out duplicates
+
+#to analyze a specific chromosome
+plink --file data --chr 6
+
+#update phenotypes
+/Users/mys/Downloads/plink_mac/plink --bfile TOP_QC3 --pheno pheno.txt --recode --out TOP_QC3_phenoUp
+
+
