@@ -5,4 +5,10 @@
 #make binary files
 
 #check the phenotype in pedfiles
-awk '{ print $6 }' filename
+awk '{ print $6 }' filename | head -1
+
+#update phenotypes
+/Users/mys/Downloads/plink_mac_20220402/plink --file TOP --pheno pheno.txt --recode --out TOPphenoUp
+
+#replace phenotypes. ##did not try
+awk 'NR==FNR{a[NR]=$0;next} {$4=a[FNR]}1' OFS="\t" test2.txt test1.txt
