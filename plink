@@ -35,4 +35,5 @@ plink --file data --chr 6
 #update phenotypes
 /Users/mys/Downloads/plink_mac/plink --bfile TOP_QC3 --pheno pheno.txt --recode --out TOP_QC3_phenoUp
 
-
+#perform association
+/Users/mys/Downloads/plink_mac/plink --file TOP_QC3_phenoUp --assoc
