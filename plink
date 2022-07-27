@@ -9,8 +9,15 @@ awk '{ print $6 }' filename | head -1
 awk 'END{print NR}' filename
 
 #filter
-/Users/mys/Downloads/plink_mac/plink --file TOP --maf 0.01 --geno 0.05 --hwe 0.00001 --make-bed --out TOP_QC1
+/Users/mys/Downloads/plink_mac/plink --file TOP_QC3_phenoUp --maf 0.01 --geno 0.05 --hwe 0.00001 --chr 1-22, x --make-bed --out TOP_QCfinal
 
+#update phenotypes
+/Users/mys/Downloads/plink_mac/plink --bfile TOP_QCfinal --pheno pheno3581.txt --recode --out TOP_QCfinal_phenoUp
+
+#perform association
+/Users/mys/Downloads/plink_mac/plink --file TOP_QCfinal_phenoUp --assoc
+
+***********************************
 #keep some samples ##From plink manual: Extract a subset of individuals
 /Users/mys/Downloads/plink_mac/plink --bfile TOP_QC --keep sex.nosex.txt --make-bed --out TOP_QC2
 
@@ -20,8 +27,3 @@ awk 'END{print NR}' filename
 #to analyze a specific chromosome
 plink --file data --chr 6
 
-#update phenotypes
-/Users/mys/Downloads/plink_mac/plink --bfile TOP_QCfinal --pheno pheno3581.txt --recode --out TOP_QCfinal_phenoUp
-
-#perform association
-/Users/mys/Downloads/plink_mac/plink --file TOP_QCfinal_phenoUp --assoc
