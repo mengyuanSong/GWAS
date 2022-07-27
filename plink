@@ -2,20 +2,8 @@
 /Users/mys/Downloads/plink_mac/plink --file TOP3 --merge TOP2.ped TOP2.map --recode --out merge
 /Users/mys/Downloads/plink_mac/plink --file merge --merge TOP1.ped TOP1.map --recode --out TOP
 
-#make binary files
-
 #check the phenotype in pedfiles
 awk '{ print $6 }' filename | head -1
-
-
-#replace phenotypes. ##long printing
-awk 'FNR==NR{a[NR]=$3;next}{$2=a[FNR]}1' f2 f1
-##FNR==NR allows you to work with one entire file at a time. In this case it is the file f2. NR and FNR both contain line numbers with the difference being FNR gets reset to 1 when a new file is read where as NR continues to increment.
-While we are working with f2 file, we are creating an array called a using line number (NR) as the key and third column ($3) as the value. next allows us to skip the rest of the action block.
-Once f2 file ends, we start to work on f1 file. NR==FNR condition will not become false as FNR will increment from 1 and NR won't. So only second action block {$2=a[FNR]} will be worked upon.
-What this block does is it re-assigns second column value to array value by looking up the line number.
-1 at the end prints the line. It returns true, and in awk true statements results in printing of the line.
-f2 f1 is the order of files defined. Since we want to create an array from file f2 we put that first.
 
 # print out the line number ##wait a minute
 awk 'END{print NR}' filename
@@ -26,14 +14,14 @@ awk 'END{print NR}' filename
 #keep some samples ##From plink manual: Extract a subset of individuals
 /Users/mys/Downloads/plink_mac/plink --bfile TOP_QC --keep sex.nosex.txt --make-bed --out TOP_QC2
 
-#remove duplicate samples
-/Users/mys/Downloads/plink_mac/plink --file TOP_QC2 --genome --out duplicates
+#remove duplicate samples based on IBD
+/Users/mys/Downloads/plink_mac/plink --bfile TOP_QC2 --genome --out duplicates
 
 #to analyze a specific chromosome
 plink --file data --chr 6
 
 #update phenotypes
-/Users/mys/Downloads/plink_mac/plink --bfile TOP_QC3 --pheno pheno.txt --recode --out TOP_QC3_phenoUp
+/Users/mys/Downloads/plink_mac/plink --bfile TOP_QCfinal --pheno pheno3581.txt --recode --out TOP_QCfinal_phenoUp
 
 #perform association
-/Users/mys/Downloads/plink_mac/plink --file TOP_QC3_phenoUp --assoc
+/Users/mys/Downloads/plink_mac/plink --file TOP_QCfinal_phenoUp --assoc
