@@ -27,3 +27,5 @@ awk 'END{print NR}' filename
 #to analyze a specific chromosome
 plink --file data --chr 6
 
+#生成一个只保留男性的ped和map文件
+/Users/mys/Downloads/plink_mac/plink --file TOP_QCfinal_phenoUp --filter-males --recode --out TOPmales
