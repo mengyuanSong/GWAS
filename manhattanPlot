@@ -1,4 +1,8 @@
+#用之前先把assoc文件转成xlsx不然列名不对
+library("readxl")
+library("ggsci")
 library(qqman)
+assoDILI<-read_xlsx(file.choose())
 manhattan(asso,ylim=c(0,12),main="Manhattan Plot",cex = 0.6, cex.axis = 0.9,col = pal_npg("nrc", alpha = 0.3)(10), suggestiveline = F, genomewideline = F, chrlabs = c(1:22, "X"),annotatePval = 0.00000005, annotateTop = FALSE)
 
 library(CMplot)
