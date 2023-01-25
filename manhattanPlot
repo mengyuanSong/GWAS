@@ -6,3 +6,8 @@ library(CMplot)
 assoDILI<-read_xlsx(file.choose())
 manhattan(assoDILI,ylim=c(0,12),main="Manhattan Plot",cex = 0.6, cex.axis = 0.9,col = pal_npg("nrc", alpha = 0.3)(10), suggestiveline = F, genomewideline = F, chrlabs = c(1:22, "X"),annotatePval = 0.00000005, annotateTop = FALSE)
 CMplot(assoDILI,col = pal_npg("nrc", alpha = 0.3)(10),chr.den.col="#3B49927F")
+
+#藏族和汉族HLA imputed后作图
+manhattan(assoDILI,ylim=c(0,8),xlim=c(25000000,36000000),main="Manhattan Plot",cex = 0.6, cex.axis = 0.9,col = pal_npg("nrc", alpha = 0.3)(1), chrlabs = c("6"),suggestiveline = F, genomewideline = F,annotatePval = 0.00000005, annotateTop = FALSE)
+abline(h=-log10(0.00000005), lty=2,col="#3B49927F")
+abline(h=-log10(0.00001), lty=3)
