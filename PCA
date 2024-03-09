@@ -1,0 +1,18 @@
+GWAS-PCA
+文件加一行
+加一列phenotype（1control，2case）
+
+library(readxl)
+library(ggplot2)
+library(ggsci)
+library(ggpubr)
+library(ggridges)
+
+HanPCA<-read_xlsx(file.choose())
+Han=HanPCA[,3:5]
+ggplot(Han,aes(x=PC1,y=PC2,col=phenotype))+geom_point()+  xlim(-0.05,0.05)+ylim(-0.1,0.05)+scale_color_manual(values = pal_npg("nrc", alpha = 0.6)(2))
+
+删去9个outlier后
+Han1PCA<-read_xlsx(file.choose())
+Han1=Han1PCA[,3:5]
+ggplot(Han1,aes(x=PC1,y=PC2,col=phenotype))+geom_point()+scale_color_manual(values = pal_npg("nrc", alpha = 0.6)(2))
