@@ -1,0 +1,68 @@
+GWAS代码
+
+提取线粒体数据
+./plink --file TOP --chr 26 --recode --out TOP_mt  
+
+./plink --file TOPmalesY --exclude mysnps.txt --recode --out TOPmalesYnoambi
+注释：从1480个Y-SNP中去除33个ambiguous sites后剩下1447个
+
+./plink --file TOPmalesYQC --exclude mysnps.txt --recode --out TOPmalesYQCnoambi
+注释：从质控后的1472个Y-SNP中去除33个ambiguous sites后剩1439个Y-SNP
+
+#从质控后的1472个Y-SNP中提取我们要的sites(1,2)585个
+./plink --file TOPmalesYQC --extract /Users/mys/Desktop/mysnpskeep.txt --recode --out TOPmalesYQC_noambi
+
+#从585个Y-SNP中进行flip后flip了292个Y-SNP
+./plink --file TOPmalesYQC_noambi --flip /Users/mys/Desktop/list.txt --recode --out TOPmalesYQC_noambi_flip
+
+#转换成vcf文件
+./plink --file TOPmalesYQC_noambi_flip --recode vcf --out TOPmalesYQC_noambi_flip_vcf
+
+#classification
+(base) mys@MYs-MacBook-Pro Y-LineageTracker % 
+LineageTracker classify -b 37 --vcf /Users/mys/Desktop/plink_mac/TOPmalesYQC_noambi_flip_vcf.vcf
+
+#生成bim文件等以便用于SNAPPY
+./plink —file TOPmalesYQCnoambiflip —make-bed —out TOPmalesYQCnoambiflip
+
+#画tree
+LineageTracker phylo --hg hg202211221620.hapresult.hg --out tree20221122
+
+#生成bed等文件用于SNAPPY
+./plink --file TOPmalesYQC_noambi --make-bed --out TOPmalesYQC_noambi_flip
+
+提取汉族男性
+./plink --file TOPmalesYQC_noambi_flip --keep /Users/mys/Desktop/Book10-Han.txt --make-bed --out plink_Han
+
+提取藏族男性
+./plink --file TOPmalesYQC_noambi_flip --keep /Users/mys/Desktop/Book7.txt --make-bed --out plink_Tibetan
+
+提取汉族男性中的controls
+./plink --bfile plink_Han --filter-controls --make-bed --out plink_Han_controls
+
+提取汉族男性中的cases
+./plink --bfile plink_Han --filter-cases --make-bed --out plink_Han_cases
+
+提取藏族男性中的controls
+./plink --bfile plink_Tibetan --filter-controls --make-bed --out plink_Tibetan_controls
+
+提取藏族男性中的cases
+./plink --bfile plink_Tibetan --filter-cases --make-bed --out plink_Tibetan_cases
+
+提取汉族男性生成ped map文件
+./plink --file TOPmalesYQC_noambi_flip --keep /Users/mys/Desktop/Book10-Han.txt --recode --out plink_Han
+
+提取藏族男性生成ped map文件
+./plink --file TOPmalesYQC_noambi_flip --keep /Users/mys/Desktop/Book7-Tibetan.txt --recode --out plink_Tibetan
+
+提取汉族男性中的controls生成ped map文件
+./plink --file plink_Han --filter-controls --recode --out plink_Han_controls
+
+提取汉族男性中的cases生成ped map文件
+./plink --file plink_Han --filter-cases --recode --out plink_Han_cases
+
+提取藏族男性中的controls生成ped map文件
+./plink --file plink_Tibetan --filter-controls --recode --out plink_Tibetan_controls
+
+提取藏族男性中的cases生成ped map文件
+./plink --file plink_Tibetan --filter-cases --recode --out plink_Tibetan_cases
