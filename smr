@@ -1,0 +1,1 @@
+./smr_Mac --beqtl-summary Whole_Blood.lite  --query 5.0e-8 --snp-chr 6 --from-snp-kb 31000 --to-snp-kb 33000 --out chr6_31-33
