@@ -1,0 +1,15 @@
+GWAS-prepare data for metal
+Han_3135<-read_table(file.choose())
+Tibetan_446=Tibetan_446[,1:9]
+Tibetan_446$a2=A2_T$A2
+Tibetan_446$SNPID=Tibetan_meta$SNP
+colnames(HLA_Tibetan)[1]<-"ignore"
+colnames(HLA_Tibetan)[9]<-"SNP"
+write.table(Tibetan_446,file = "/Users/mys/Desktop/Tibetan_446.txt",row.names=F,sep="\t",quote = FALSE)
+
+
+注意allele SNP a2 log(OR) markers数量 
+
+#R split a column to two columns
+library(stringr)
+data$MarkerName<- str_split_fixed(data$MarkerName, '_', 2)
