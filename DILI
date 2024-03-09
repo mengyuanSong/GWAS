@@ -1,0 +1,7 @@
+合并两个一线治疗方案
+./plink --bfile /Users/mys/Desktop/DILI/HREZ_A_therapy/7 --bmerge /Users/mys/Desktop/DILI/HRE_B_therapy/5.bed /Users/mys/Desktop/DILI/HRE_B_therapy/5.bim /Users/mys/Desktop/DILI/HRE_B_therapy/5.fam --make-bed --out therapy1
+
+把assoc文件存成txt文件，然后用excel打开，并text to columns
+
+然后用R语言作Manhattan图
+therapy1<-read_xlsx(file.choose())
