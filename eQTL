@@ -1,0 +1,13 @@
+打开plink生成的logistic
+Han1$logOR<-log(Han1$OR)
+Han1$zscore<-(Han1$logOR)/(Han1$SE)
+Han1$alt<-A2$A2
+注意Han1和A2的marker要一致
+colnames(Han1)[1]<-"chr"
+colnames(Han1)[2]<-"rsnum"
+colnames(Han1)[3]<-"pos"
+colnames(Han1)[4]<-"ref"
+colnames(Han1)[14]<-"effect"
+colnames(Han1)[8]<-"se"
+colnames(Han1)[12]<-"pvalue"
+Han1_chr6_GWAS<-subset(Han1,Han1[1]==6)
