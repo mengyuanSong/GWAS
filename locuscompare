@@ -1,0 +1,5 @@
+locuscompare(in_fn1=gwas_fn, in_fn2=eqtl_fn, marker_col1 = "rs_id", pval_col1 = "pval_nominal",
+             title1 = "eQTL", marker_col2 = "rs_id", pval_col2 = "pval_nominal",
+             title2 = "GWAS", snp = NULL, population = "EUR", combine = TRUE,
+             legend = TRUE, legend_position = c("bottomright", "topright",
+                                                "topleft"), lz_ylab_linebreak = FALSE, genome = c("hg19", "hg38"))
