@@ -1,0 +1,2 @@
+GWAS-condition
+./plink --bfile Han_SNP4 --condition rs114087228 --logistic --out Han_condition1
