@@ -1,0 +1,4 @@
+GWAS-HLA
+先进入(base) mys@192 SNP2HLA %
+./SNP2HLA.csh TOP_chr6_Han_HLA_3116  Pan-Asian_REF TOP_chr6_Han_HLA_3116_IMPUTED ./plink 10000 1000
+/plink --noweb --dosage TOP_chr6_Han_HLA_3116_IMPUTED.dosage noheader format=1 --fam TOP_chr6_Han_HLA_3116_IMPUTED.fam --logistic --out TOP_chr6_Han_HLA_3116_IMPUTED.assoc
