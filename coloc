@@ -1,0 +1,54 @@
+先打开QTL文件
+…
+然后选出需要的行
+blood_eqtl<-blood_eqtl[,c(‘SNP','BP','b','SE')]
+然后去除duplicate的行
+blood_eqtl<-blood_eqtl[!duplicated(blood_eqtl$SNP), ]
+生成varbeta
+blood_eqtl$varbeta=(blood_eqtl$SE)^2
+增加sdY列
+blood_eqtl$sdY<-(sqrt(670))*(blood_eqtl$SE)
+改列名
+colnames(blood_eqtl)[1]<-"rs_id"
+
+打开GWAS数据
+然后选出需要的行
+mygwas<-Han1_HLA_31_33[,c('rsnum','pos','effect','se')]
+然后去除duplicate的行
+mygwas<-mygwas[!duplicated(mygwas$rsnum), ]
+去除NA
+mygwas<-na.omit(mygwas)
+生成varbeta
+mygwas$varbeta=(mygwas$se)^2
+改SNP列名
+colnames(mygwas)[1]<-"rs_id"
+
+Merge两个数据集
+myinput <- merge(blood_eqtl, mygwas, by="rs_id", all=FALSE, suffixes=c("_eqtl","_gwas"))
+
+算
+result<-coloc.abf(dataset1=list(snp=myinput$rs_id,beta=myinput$effect,varbeta=myinput$varbeta_gwas,type="cc",s=0.49),dataset2=list(snp=myinput$rs_id,beta=myinput$b,varbeta=myinput$varbeta_eqtl,sdY=myinput$sdY,type="quant"))
+
+选
+need_result=result$results %>% filter(SNP.PP.H4>-1)
+
+导
+write.table(need_result,file = "/Users/mys/Desktop/myresult_Tibetan_HLA_lung.txt",row.names=F,sep="\t",quote = FALSE)
+
+选
+need_result=result$results %>% filter(SNP.PP.H4>0.95)
+
+
+
+*************************************
+
+
+**************************************
+打开文件后整理gwas
+mygwas<-Han[,c('SNP','BP','OR','SE')]
+mygwas<-mygwas[!duplicated(mygwas$SNP), ]
+mygwas<-na.omit(mygwas)
+View(mygwas)
+mygwas$varbeta=(mygwas$SE)^2
+mygwas$effect=log(mygwas$OR)
+colnames(mygwas)[1]<-"rs_id"
