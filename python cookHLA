@@ -1,0 +1,6 @@
+python CookHLA.py \
+    -i example/1958BC.hg19 \
+    -hg 19 \
+    -o MyHLAImputation/1958BC+HM_CEU_REF \
+    -ref example/HM_CEU_REF \
+    -mem 2g \
