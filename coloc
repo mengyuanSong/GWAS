@@ -52,3 +52,10 @@ View(mygwas)
 mygwas$varbeta=(mygwas$SE)^2
 mygwas$effect=log(mygwas$OR)
 colnames(mygwas)[1]<-"rs_id"
+
+#coloc作图
+
+ggscatter(myinput, x = "effect", y = "b", conf.int = TRUE, 
+          cor.coef = TRUE, cor.method = "pearson",xlab = "beta_gwas", ylab = "beta_eqtl",mean.point = TRUE,color = "#3B49927F")
+
+ggplot(Han,aes(x=PC1,y=PC2,col=phenotype))+geom_point()+  xlim(-0.05,0.05)+ylim(-0.1,0.05)+scale_color_manual(values = pal_npg("nrc", alpha = 0.6)(2))
